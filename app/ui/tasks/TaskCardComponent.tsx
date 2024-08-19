@@ -4,7 +4,7 @@ import { statusColor, typeColor } from "@/app/helpers/badgeColors";
 import { formatDate } from "@/app/helpers/dateFormat";
 import { getTask } from "@/app/seed/route";
 import Loading from "@/app/task-managment/loading";
-import { ITask } from "@/app/types/models";
+import { ITask, TaskStatuses } from "@/app/types/models";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Text,
@@ -37,6 +37,14 @@ export default function TaskCardComponent({ id }: { id: string }) {
     };
     fetchTasks(id);
   }, [update]);
+
+  const statusMenuItems = Object.values(TaskStatuses).map((status) => {
+    if (status !== task?.status) {
+      return <MenuItem key={status}>{status}</MenuItem>;
+    } else {
+      return null;
+    }
+  });
 
   return (
     <>
@@ -78,10 +86,15 @@ export default function TaskCardComponent({ id }: { id: string }) {
               {formatDate(task.createdOn)}
             </Text>
             <Spacer />
-            <Badge className="mr-2" colorScheme={statusColor(task.status)}>
-              {task.status}
+            <Menu>
+              <MenuButton size="xs" as={Button} rightIcon={<ChevronDownIcon />}>
+                {task.status}
+              </MenuButton>
+              <MenuList>{statusMenuItems}</MenuList>
+            </Menu>
+            <Badge className="ml-4" colorScheme={typeColor(task.type)}>
+              {task.type}
             </Badge>
-            <Badge colorScheme={typeColor(task.type)}>{task.type}</Badge>
           </Box>
         </Box>
       ) : (

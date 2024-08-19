@@ -8,8 +8,8 @@ import { randomBytes } from "crypto";
 export async function getTasks(): Promise<ITask[]> {
   await connectDB();
   try {
-    const tasks = await Todo.find();
-    return tasks;
+    const tasks = await Todo.find().sort({ createdOn: -1 });
+    return JSON.parse(JSON.stringify(tasks));
   } catch (e) {
     console.log(e);
     return [];
@@ -42,13 +42,15 @@ export async function postTask(task: ITask) {
     return JSON.parse(JSON.stringify(updatedTask));
   } else {
     const userId = Date.now() + 5;
+    const createdOnDate = new Date(task.createdOn);
+
     const newTask = new Todo({
       userId: userId,
       id: task.id,
       title: task.title,
       description: task.description,
       type: task.type,
-      createdOn: task.createdOn,
+      createdOn: createdOnDate,
       status: task.status,
       assigned: [],
     });
