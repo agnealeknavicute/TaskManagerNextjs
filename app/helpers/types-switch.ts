@@ -1,4 +1,4 @@
-import { TaskTypes } from "../types/models";
+import { TaskTypes } from "../types/client-task-models";
 
 export function rawTypeToRealType(rawType: number): TaskTypes {
   switch (rawType) {
