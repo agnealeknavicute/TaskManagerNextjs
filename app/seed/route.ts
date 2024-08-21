@@ -4,7 +4,7 @@ import connectDB from '@/lib/connectDB';
 import { ITask, TaskStatuses } from '../types/client-task-models';
 import { rawTypeToRealType } from '../helpers/types-switch';
 import { revalidatePath } from 'next/cache';
-import { Todo } from '../types/db-todo-model';
+import { Todo } from '../types/db-todo-Model';
 
 export async function getTasks(): Promise<ITask[]> {
     await connectDB();
