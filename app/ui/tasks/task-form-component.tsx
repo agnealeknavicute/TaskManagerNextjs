@@ -56,7 +56,6 @@ export default function TaskFormComponent({ id, title = '', description = '', ty
             router.push('/task-management/task-list');
         } else if (onClose) {
             onClose();
-            router.refresh();
         }
     };
 
