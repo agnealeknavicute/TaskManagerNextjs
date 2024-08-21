@@ -5,11 +5,11 @@ import { Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 
-interface ICardStatusComponent {
+interface CardStatusComponentProps {
     task: ITask;
 }
 
-export default function CardStatusMenuComponent(props: ICardStatusComponent) {
+export default function CardStatusMenuComponent(props: CardStatusComponentProps) {
     const [taskStatus, setTaskStatus] = useState<TaskStatuses>(props.task.status);
 
     const statusMenuItems = Object.values(TaskStatuses).map((status) => {

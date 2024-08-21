@@ -4,11 +4,11 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { deleteTask } from '@/app/seed/route';
 
-interface ICardDeleteComponent {
+interface CardDeleteComponentProps {
     id: number;
 }
 
-export default function CardDeleteComponent(props: ICardDeleteComponent) {
+export default function CardDeleteComponent(props: CardDeleteComponentProps) {
     const router = useRouter();
 
     return (

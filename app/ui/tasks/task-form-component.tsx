@@ -20,7 +20,7 @@ import { TaskTypes } from '../../types/client-task-models';
 import { postTask, updateTask } from '@/app/seed/route';
 import { useForm } from 'react-hook-form';
 
-interface ITaskForm {
+interface TaskFormProps {
     title?: string;
     id?: number;
     description?: string;
@@ -34,7 +34,14 @@ interface TaskFormValues {
     type: 0 | 1 | 2;
 }
 
-export default function TaskFormComponent({ id, title = '', description = '', type = 1, modal, onClose }: ITaskForm) {
+export default function TaskFormComponent({
+    id,
+    title = '',
+    description = '',
+    type = 1,
+    modal,
+    onClose,
+}: TaskFormProps) {
     const router = useRouter();
     const {
         register,

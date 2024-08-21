@@ -5,14 +5,14 @@ import { TaskStatuses, TaskTypes } from '@/app/types/client-task-models';
 import TaskFormComponent from './task-form-component';
 import { realTypeToRawType } from '@/app/helpers/types-switch';
 
-interface ITaskEditComponent {
+interface TaskEditComponentProps {
     title: string | TaskStatuses;
     description: string;
     type: TaskTypes;
     id: number;
 }
 
-export default function TaskEditComponent(props: ITaskEditComponent) {
+export default function TaskEditComponent(props: TaskEditComponentProps) {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (

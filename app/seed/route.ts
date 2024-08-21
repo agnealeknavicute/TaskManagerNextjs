@@ -1,10 +1,10 @@
 'use server';
 
-import { Todo } from '@/app/types/db-todo-Model';
 import connectDB from '@/lib/connectDB';
 import { ITask, TaskStatuses } from '../types/client-task-models';
 import { rawTypeToRealType } from '../helpers/types-switch';
 import { revalidatePath } from 'next/cache';
+import { Todo } from '../types/db-todo-model';
 
 export async function getTasks(): Promise<ITask[]> {
     await connectDB();
@@ -42,7 +42,7 @@ export async function updateTask(id: number, title: string, description: string,
         );
         revalidatePath(`/task-management/task-list`);
 
-        return JSON.parse(JSON.stringify(updatedTask));
+        return JSON.parse(JSON.stringify(updateTask));
     } catch (e) {
         console.log(e);
         return null;
@@ -77,7 +77,7 @@ export async function updateTaskStatus(status: TaskStatuses, id: number) {
         const updatedTask = await Todo.findOneAndUpdate({ id: id }, { status: status }, { new: true });
         revalidatePath(`/task-management/task-list`);
 
-        return JSON.parse(JSON.stringify(updatedTask));
+        return JSON.parse(JSON.stringify(updateTask));
     } catch (e) {
         console.log(e);
         return null;
