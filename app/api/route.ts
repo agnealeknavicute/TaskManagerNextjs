@@ -5,6 +5,8 @@ import { ITask, TaskStatuses } from '../types/client-task-models';
 import { rawTypeToRealType } from '../helpers/types-switch';
 import { revalidatePath } from 'next/cache';
 import { Todo } from '../types/db-todo-model';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 export async function getTasks(): Promise<ITask[]> {
     await connectDB();
@@ -50,25 +52,32 @@ export async function updateTask(id: number, title: string, description: string,
 }
 
 export async function postTask(title: string, description: string, type: 0 | 1 | 2) {
-    await connectDB();
+    const session = await getServerSession(authOptions);
 
-    const userId = Date.now() + 5;
-    const id = Date.now();
+    if (!session || !session.user) {
+        console.log('no session');
+        return;
+    } else {
+        await connectDB();
 
-    const newTask = new Todo({
-        userId: userId,
-        id: id,
-        title: title,
-        description: description,
-        type: rawTypeToRealType(type),
-        createdOn: new Date(),
-        status: TaskStatuses.NotStarted,
-        assigned: [],
-    });
-    try {
-        await newTask.save();
-    } catch (e) {
-        console.log(e);
+        const id = Date.now();
+
+        const newTask = new Todo({
+            userId: session.user.id,
+            id: id,
+            title: title,
+            description: description,
+            type: rawTypeToRealType(type),
+            createdOn: new Date(),
+            status: TaskStatuses.NotStarted,
+            assigned: [],
+        });
+        try {
+            await newTask.save();
+            revalidatePath('/task-management/task-list');
+        } catch (e) {
+            console.log(e);
+        }
     }
 }
 

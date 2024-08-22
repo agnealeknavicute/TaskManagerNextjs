@@ -2,7 +2,7 @@
 import { MenuItem } from '@chakra-ui/react';
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { deleteTask } from '@/app/seed/route';
+import { deleteTask } from '@/app/api/route';
 
 interface CardDeleteComponentProps {
     id: number;

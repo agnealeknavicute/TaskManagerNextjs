@@ -17,8 +17,11 @@ import {
     Textarea,
 } from '@chakra-ui/react';
 import { TaskTypes } from '../../types/client-task-models';
-import { postTask, updateTask } from '@/app/seed/route';
+import { postTask, updateTask } from '@/app/api/route';
 import { useForm } from 'react-hook-form';
+import { revalidatePath } from 'next/cache';
+import { useSession } from 'next-auth/react';
+import { authOptions } from '@/lib/auth';
 
 interface TaskFormProps {
     title?: string;
@@ -54,15 +57,12 @@ export default function TaskFormComponent({
 
     const onSubmit = async (data: TaskFormValues) => {
         const taskId = id || Date.now();
-        if (id) {
+        if (id && onClose) {
             await updateTask(taskId, data.title, data.description, data.type);
+            onClose();
         } else {
             await postTask(data.title, data.description, data.type);
-        }
-        if (!modal) {
             router.push('/task-management/task-list');
-        } else if (onClose) {
-            onClose();
         }
     };
 

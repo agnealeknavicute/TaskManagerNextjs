@@ -1,5 +1,5 @@
 'use client';
-import { updateTaskStatus } from '@/app/seed/route';
+import { updateTaskStatus } from '@/app/api/route';
 import { ITask, TaskStatuses } from '@/app/types/client-task-models';
 import { Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react';
 import React, { useState } from 'react';
