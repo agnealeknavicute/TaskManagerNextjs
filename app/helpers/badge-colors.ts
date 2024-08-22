@@ -1,4 +1,4 @@
-import { TaskStatuses, TaskTypes } from "../types/models";
+import { TaskStatuses, TaskTypes } from "../types/client-task-models";
 
 export const statusColor = (status: TaskStatuses) => {
   switch (status) {
