@@ -8,6 +8,7 @@ import CardStatusMenuComponent from './card-status-component';
 import CardDeleteComponent from './card-delete-component';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import CardManagerAssignComponent from './card-manager-assign-component';
 
 export default async function TaskCardComponent({ id }: { id: string }) {
     const task = await getTask(id);
@@ -34,13 +35,22 @@ export default async function TaskCardComponent({ id }: { id: string }) {
                                     <CardDeleteComponent id={task.id} />
                                 </TaskCardMenu>
                             )}
+                            {session?.user.roles.includes('manager') && (
+                                <TaskCardMenu menuTitle="Actions">
+                                    <CardManagerAssignComponent
+                                        taskId={task.id}
+                                        users={users}
+                                        assignedUsers={task.assigned}
+                                    />
+                                </TaskCardMenu>
+                            )}
                         </Box>
                         <Flex>
                             <Text>{task.description}</Text>
                             <Spacer />
                             <AvatarGroup size="sm" max={2}>
-                                {task.assigned.map((user) => (
-                                    <Avatar name={user} />
+                                {task.assigned.map((user, index) => (
+                                    <Avatar key={index} name={user} />
                                 ))}
                             </AvatarGroup>
                         </Flex>

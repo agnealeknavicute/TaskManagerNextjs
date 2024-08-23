@@ -12,7 +12,7 @@ interface CardStatusComponentProps {
 export default function CardStatusMenuComponent(props: CardStatusComponentProps) {
     const [taskStatus, setTaskStatus] = useState<TaskStatuses>(props.task.status);
 
-    const statusMenuItems = Object.values(TaskStatuses).map((status) => {
+    const statusMenuItems = Object.values(TaskStatuses).map((status, index) => {
         if (status !== taskStatus) {
             return (
                 <MenuItem
@@ -22,7 +22,7 @@ export default function CardStatusMenuComponent(props: CardStatusComponentProps)
                             setTaskStatus(status);
                         }
                     }}
-                    key={status}
+                    key={index}
                 >
                     {status}
                 </MenuItem>

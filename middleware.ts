@@ -7,8 +7,8 @@ export async function middleware(req: NextRequest) {
     const token = await getToken({ req, secret });
     const { pathname } = req.nextUrl;
 
-    const protectedRoutes = ['/task-management'];
-    const adminRoutes = ['/task-management/task-adding'];
+    const protectedRoutes = ['/task-management', '/users-management'];
+    const adminRoutes = ['/task-management/task-adding', '/users-management'];
 
     if (protectedRoutes.some((route) => pathname.startsWith(route))) {
         if (!token) {

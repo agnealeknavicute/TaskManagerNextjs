@@ -26,6 +26,7 @@ import { postTask, updateTask } from '@/app/api/route';
 import { useForm } from 'react-hook-form';
 import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from '@choc-ui/chakra-autocomplete';
 import { IUser } from '@/app/types/client-user-model';
+import CardAssignComponent from './card-assign-component';
 
 interface TaskFormProps {
     title?: string;
@@ -55,7 +56,6 @@ export default function TaskFormComponent({
     onClose,
 }: TaskFormProps) {
     const [newAssignedUsers, setNewAssignedUsers] = useState<string[]>(assignedUsers);
-    const [assignUser, setAssignUser] = useState<string>('');
     const router = useRouter();
     const {
         register,
@@ -65,10 +65,9 @@ export default function TaskFormComponent({
     } = useForm<TaskFormValues>({
         defaultValues: { title, description, type },
     });
-    const assignHandler = () => {
-        if (assignUser.trim()) {
+    const assignHandler = (assignUser: string) => {
+        if (assignUser.trim() && !newAssignedUsers.includes(assignUser)) {
             setNewAssignedUsers([...newAssignedUsers, assignUser]);
-            setAssignUser('');
         }
     };
     const onSubmit = async (data: TaskFormValues) => {
@@ -136,55 +135,12 @@ export default function TaskFormComponent({
                             <p>{TaskTypes.HighUrgency}</p>
                         </FormHelperText>
                     </FormControl>
-                    <FormControl>
-                        <FormLabel>Assigned users</FormLabel>
-                        <AutoComplete
-                            onChange={(value: string) => {
-                                setAssignUser(value);
-                            }}
-                            openOnFocus
-                        >
-                            <Flex>
-                                <AutoCompleteInput colorScheme="purple" variant="outline" />
-                                <Button onClick={assignHandler} className="ml-2">
-                                    Add
-                                </Button>
-                            </Flex>
-
-                            <AutoCompleteList>
-                                {users.map((user, ind) => (
-                                    <AutoCompleteItem
-                                        value={user.username}
-                                        key={`option-${ind}`}
-                                        textTransform="capitalize"
-                                    >
-                                        {user.username}
-                                    </AutoCompleteItem>
-                                ))}
-                            </AutoCompleteList>
-                        </AutoComplete>
-                        <Flex className="mt-3">
-                            {newAssignedUsers.map((user, index) => (
-                                <Tag
-                                    className="mr-1"
-                                    size="md"
-                                    key={index}
-                                    borderRadius="full"
-                                    variant="solid"
-                                    colorScheme="purple"
-                                >
-                                    <TagLabel>{user}</TagLabel>
-                                    <TagCloseButton
-                                        onClick={() => {
-                                            setNewAssignedUsers(
-                                                newAssignedUsers.filter((assignedUser) => assignedUser !== user),
-                                            );
-                                        }}
-                                    />
-                                </Tag>
-                            ))}
-                        </Flex>
-                    </FormControl>
+                    <CardAssignComponent
+                        users={users}
+                        newAssignedUsers={newAssignedUsers}
+                        setNewAssignedUsers={setNewAssignedUsers}
+                        assignHandler={assignHandler}
+                    />
                     <Button type="submit" className=" mt-4 float-end" colorScheme="purple">
                         Submit
                     </Button>

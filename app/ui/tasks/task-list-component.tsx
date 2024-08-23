@@ -1,18 +1,5 @@
 import { ITask } from '../../types/client-task-models';
-import {
-    CardBody,
-    Card,
-    Text,
-    Heading,
-    Stack,
-    Avatar,
-    AvatarBadge,
-    AvatarGroup,
-    Badge,
-    Box,
-    Spacer,
-    Flex,
-} from '@chakra-ui/react';
+import { CardBody, Card, Text, Heading, Stack, Avatar, AvatarGroup, Badge, Box, Spacer, Flex } from '@chakra-ui/react';
 import { getTasks } from '@/app/api/route';
 import Link from 'next/link';
 import { statusColor, typeColor } from '@/app/helpers/badge-colors';

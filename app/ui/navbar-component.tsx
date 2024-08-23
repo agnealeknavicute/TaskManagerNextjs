@@ -12,6 +12,11 @@ export default async function Navbar() {
 
             {session && (
                 <div className="flex justify-center">
+                    {session.user.roles.includes('admin') && (
+                        <a href="/users-management/users-list" className="px-4 hover:cursor-pointer">
+                            User List
+                        </a>
+                    )}
                     <a href="/task-management/task-list" className="px-4 hover:cursor-pointer">
                         Task List
                     </a>

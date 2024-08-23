@@ -103,12 +103,36 @@ export async function updateTaskStatus(status: TaskStatuses, id: number) {
 }
 
 export async function getUsers(): Promise<IUser[]> {
+    await connectDB();
     try {
         const users = await User.find({});
         return JSON.parse(JSON.stringify(users));
     } catch (e) {
         console.log(e);
         return [];
+    }
+}
+
+export async function getUser(id: string): Promise<IUser | null> {
+    await connectDB();
+    try {
+        const user = await User.findOne({ _id: id });
+        return JSON.parse(JSON.stringify(user));
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
+export async function updateAssignedUsers(taskId: number, assignedUsers: string[]) {
+    await connectDB();
+    try {
+        const task = await Todo.findOneAndUpdate({ id: taskId }, { assigned: assignedUsers }, { new: true });
+        revalidatePath(`/task-management/task-list`);
+        return JSON.parse(JSON.stringify(task));
+    } catch (e) {
+        console.log(e);
+        return null;
     }
 }
 

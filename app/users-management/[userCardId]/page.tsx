@@ -1,12 +1,12 @@
-import TaskCardComponent from '@/app/ui/tasks/task-card-component';
 import React, { Suspense } from 'react';
 import Loading from '../../loading';
+import UserCardComponent from '@/app/ui/users/user-card-component';
 
-export default function TaskCardPage({ params }: { params: { taskCardId: string } }) {
+export default function TaskCardPage({ params }: { params: { userCardId: string } }) {
     return (
         <div className="my-12">
             <Suspense fallback={<Loading skelNum={1} />}>
-                <TaskCardComponent id={params.taskCardId} />
+                <UserCardComponent id={params.userCardId} />
             </Suspense>
         </div>
     );

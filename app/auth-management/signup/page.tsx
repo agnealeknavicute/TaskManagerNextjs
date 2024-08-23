@@ -1,4 +1,4 @@
-import Loading from '@/app/task-management/loading';
+import Loading from '@/app/loading';
 import SignupComponent from '@/app/ui/auth/signup-component';
 import React, { Suspense } from 'react';
 
