@@ -1,6 +1,6 @@
 import { statusColor, typeColor } from '@/app/helpers/badge-colors';
-import { getTask } from '@/app/api/route';
-import { Text, Heading, Stack, Box, Divider, Spacer, Badge } from '@chakra-ui/react';
+import { getTask, getUsers } from '@/app/api/route';
+import { Text, Heading, Stack, Box, Divider, Spacer, Badge, Flex, AvatarGroup, Avatar } from '@chakra-ui/react';
 import React from 'react';
 import { TaskCardMenu } from './card-menu-component';
 import TaskEditComponent from './task-edit-component';
@@ -11,6 +11,7 @@ import { authOptions } from '@/lib/auth';
 
 export default async function TaskCardComponent({ id }: { id: string }) {
     const task = await getTask(id);
+    const users = await getUsers();
     const session = await getServerSession(authOptions);
     return (
         <>
@@ -23,6 +24,8 @@ export default async function TaskCardComponent({ id }: { id: string }) {
                             {session?.user.roles.includes('admin') && (
                                 <TaskCardMenu menuTitle="Actions">
                                     <TaskEditComponent
+                                        users={users}
+                                        assignedUsers={task.assigned}
                                         id={task.id}
                                         type={task.type}
                                         title={task.title}
@@ -32,7 +35,15 @@ export default async function TaskCardComponent({ id }: { id: string }) {
                                 </TaskCardMenu>
                             )}
                         </Box>
-                        <Text>{task.description}</Text>
+                        <Flex>
+                            <Text>{task.description}</Text>
+                            <Spacer />
+                            <AvatarGroup size="sm" max={2}>
+                                {task.assigned.map((user) => (
+                                    <Avatar name={user} />
+                                ))}
+                            </AvatarGroup>
+                        </Flex>
                     </Stack>
                     <Divider className="mt-4 mb-1" />
                     <Box className="flex items-center">

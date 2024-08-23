@@ -7,6 +7,8 @@ import { revalidatePath } from 'next/cache';
 import { Todo } from '../types/db-todo-model';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { User } from '../types/db-user-model';
+import { IUser } from '../types/client-user-model';
 
 export async function getTasks(): Promise<ITask[]> {
     await connectDB();
@@ -30,7 +32,13 @@ export async function getTask(id: string): Promise<ITask | null> {
     }
 }
 
-export async function updateTask(id: number, title: string, description: string, type: 0 | 1 | 2) {
+export async function updateTask(
+    id: number,
+    title: string,
+    description: string,
+    type: 0 | 1 | 2,
+    newAssignedUsers: string[],
+) {
     await connectDB();
     try {
         const updatedTask = await Todo.findOneAndUpdate(
@@ -39,19 +47,20 @@ export async function updateTask(id: number, title: string, description: string,
                 title: title,
                 description: description,
                 type: rawTypeToRealType(type),
+                assigned: newAssignedUsers,
             },
             { new: true },
         );
         revalidatePath(`/task-management/task-list`);
 
-        return JSON.parse(JSON.stringify(updateTask));
+        return JSON.parse(JSON.stringify(updatedTask));
     } catch (e) {
         console.log(e);
         return null;
     }
 }
 
-export async function postTask(title: string, description: string, type: 0 | 1 | 2) {
+export async function postTask(title: string, description: string, type: 0 | 1 | 2, newAssignedUsers: string[]) {
     const session = await getServerSession(authOptions);
 
     if (!session || !session.user) {
@@ -70,7 +79,7 @@ export async function postTask(title: string, description: string, type: 0 | 1 |
             type: rawTypeToRealType(type),
             createdOn: new Date(),
             status: TaskStatuses.NotStarted,
-            assigned: [],
+            assigned: newAssignedUsers,
         });
         try {
             await newTask.save();
@@ -90,6 +99,16 @@ export async function updateTaskStatus(status: TaskStatuses, id: number) {
     } catch (e) {
         console.log(e);
         return null;
+    }
+}
+
+export async function getUsers(): Promise<IUser[]> {
+    try {
+        const users = await User.find({});
+        return JSON.parse(JSON.stringify(users));
+    } catch (e) {
+        console.log(e);
+        return [];
     }
 }
 

@@ -4,12 +4,15 @@ import { Modal, ModalOverlay, ModalContent, useDisclosure, MenuItem } from '@cha
 import { TaskStatuses, TaskTypes } from '@/app/types/client-task-models';
 import TaskFormComponent from './task-form-component';
 import { realTypeToRawType } from '@/app/helpers/types-switch';
+import { IUser } from '@/app/types/client-user-model';
 
 interface TaskEditComponentProps {
     title: string | TaskStatuses;
     description: string;
     type: TaskTypes;
     id: number;
+    users: IUser[];
+    assignedUsers: string[];
 }
 
 export default function TaskEditComponent(props: TaskEditComponentProps) {
@@ -29,6 +32,8 @@ export default function TaskEditComponent(props: TaskEditComponentProps) {
                         title={props.title}
                         description={props.description}
                         onClose={onClose}
+                        users={props.users}
+                        assignedUsers={props.assignedUsers}
                     />
                 </ModalContent>
             </Modal>
