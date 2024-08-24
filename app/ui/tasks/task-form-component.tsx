@@ -3,10 +3,8 @@ import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import React, { useState } from 'react';
 import {
-    Badge,
     Box,
     Button,
-    Flex,
     FormControl,
     FormErrorMessage,
     FormHelperText,
@@ -16,17 +14,14 @@ import {
     SliderFilledTrack,
     SliderThumb,
     SliderTrack,
-    Tag,
-    TagCloseButton,
-    TagLabel,
     Textarea,
 } from '@chakra-ui/react';
 import { TaskTypes } from '../../types/client-task-models';
 import { postTask, updateTask } from '@/app/api/route';
 import { useForm } from 'react-hook-form';
-import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList } from '@choc-ui/chakra-autocomplete';
 import { IUser } from '@/app/types/client-user-model';
 import CardAssignComponent from './card-assign-component';
+import { useTranslations } from 'use-intl';
 
 interface TaskFormProps {
     title?: string;
@@ -55,6 +50,8 @@ export default function TaskFormComponent({
     users = [],
     onClose,
 }: TaskFormProps) {
+    const t = useTranslations('All');
+
     const [newAssignedUsers, setNewAssignedUsers] = useState<string[]>(assignedUsers);
     const router = useRouter();
     const {
@@ -91,32 +88,32 @@ export default function TaskFormComponent({
             >
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <FormControl className="mb-4" isInvalid={!!errors.title}>
-                        <FormLabel>Title</FormLabel>
+                        <FormLabel>{t('Title')}</FormLabel>
                         <Input
                             type="text"
                             focusBorderColor="#9F7AEA"
                             {...register('title', {
-                                required: 'Title is required',
-                                minLength: { value: 3, message: 'Title should be at least 3 characters long' },
+                                required: t('Title is required'),
+                                minLength: { value: 3, message: t('Title should be at least 3 characters long') },
                             })}
                         />
                         <FormErrorMessage>{errors.title && errors.title.message}</FormErrorMessage>
-                        <FormHelperText>Enter the short title of the task</FormHelperText>
+                        <FormHelperText>{t('Enter the short title of the task')}</FormHelperText>
                     </FormControl>
                     <FormControl className="mb-4" isInvalid={!!errors.description}>
-                        <FormLabel>Description</FormLabel>
+                        <FormLabel>{t('Description')}</FormLabel>
                         <Textarea
                             focusBorderColor="#9F7AEA"
                             {...register('description', {
-                                required: 'Description is required',
-                                minLength: { value: 7, message: 'Description should be at least 7 characters long' },
+                                required: t('Description is required'),
+                                minLength: { value: 7, message: t('Description should be at least 7 characters long') },
                             })}
                         />
                         <FormErrorMessage>{errors.description && errors.description.message}</FormErrorMessage>
-                        <FormHelperText>Enter the description of the task</FormHelperText>
+                        <FormHelperText>{t('Enter the description of the task')}</FormHelperText>
                     </FormControl>
                     <FormControl className="mb-4">
-                        <FormLabel>Type</FormLabel>
+                        <FormLabel>{t('Type')}</FormLabel>
                         <Slider
                             min={0}
                             max={2}
@@ -130,9 +127,9 @@ export default function TaskFormComponent({
                             <SliderThumb boxSize={6} />
                         </Slider>
                         <FormHelperText className="flex justify-between">
-                            <p>{TaskTypes.LowUrgency}</p>
-                            <p>{TaskTypes.MediumUrgency}</p>
-                            <p>{TaskTypes.HighUrgency}</p>
+                            <p>{t(TaskTypes.LowUrgency)}</p>
+                            <p>{t(TaskTypes.MediumUrgency)}</p>
+                            <p>{t(TaskTypes.HighUrgency)}</p>
                         </FormHelperText>
                     </FormControl>
                     <CardAssignComponent
@@ -142,7 +139,7 @@ export default function TaskFormComponent({
                         assignHandler={assignHandler}
                     />
                     <Button type="submit" className=" mt-4 float-end" colorScheme="purple">
-                        Submit
+                        {t('Submit')}
                     </Button>
                 </form>
             </Box>

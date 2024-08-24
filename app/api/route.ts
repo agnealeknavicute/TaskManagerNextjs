@@ -9,6 +9,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { User } from '../types/db-user-model';
 import { IUser } from '../types/client-user-model';
+import { Lang } from '../types/db-lang-model';
 
 export async function getTasks(): Promise<ITask[]> {
     await connectDB();
@@ -137,8 +138,20 @@ export async function updateAssignedUsers(taskId: number, assignedUsers: string[
 }
 
 export async function deleteTask(id: number) {
+    await connectDB();
+
     try {
         await Todo.findOneAndDelete({ id: id });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export async function getTranslation(locale: string) {
+    await connectDB();
+    try {
+        const tran = await Lang.findOne({ locale: locale });
+        return tran.translations;
     } catch (e) {
         console.log(e);
     }

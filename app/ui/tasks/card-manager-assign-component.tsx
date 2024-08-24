@@ -4,6 +4,7 @@ import { Modal, ModalOverlay, ModalContent, ModalBody, useDisclosure, Button, Me
 import CardAssignComponent from './card-assign-component';
 import { IUser } from '@/app/types/client-user-model';
 import { updateAssignedUsers } from '@/app/api/route';
+import { useTranslations } from 'use-intl';
 
 interface CardManAssignCompProps {
     users: IUser[];
@@ -12,6 +13,8 @@ interface CardManAssignCompProps {
 }
 
 export default function CardManagerAssignComponent({ users = [], assignedUsers = [], taskId }: CardManAssignCompProps) {
+    const t = useTranslations('All');
+
     const [newAssignedUsers, setNewAssignedUsers] = useState<string[]>(assignedUsers);
     const assignHandler = (assignUser: string) => {
         if (assignUser.trim() && !newAssignedUsers.includes(assignUser)) {
@@ -27,7 +30,7 @@ export default function CardManagerAssignComponent({ users = [], assignedUsers =
 
     return (
         <>
-            <MenuItem onClick={onOpen}>Change assigned users</MenuItem>
+            <MenuItem onClick={onOpen}>{t('Change assigned users')}</MenuItem>
 
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
@@ -40,7 +43,7 @@ export default function CardManagerAssignComponent({ users = [], assignedUsers =
                             assignHandler={assignHandler}
                         />
                         <Button onClick={updateUsersHandler} className=" mt-4 float-end" colorScheme="purple">
-                            Submit
+                            {t('Submit')}
                         </Button>
                     </ModalBody>
                 </ModalContent>

@@ -9,8 +9,10 @@ import CardDeleteComponent from './card-delete-component';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import CardManagerAssignComponent from './card-manager-assign-component';
+import { getTranslations } from 'next-intl/server';
 
 export default async function TaskCardComponent({ id }: { id: string }) {
+    const t = await getTranslations('All');
     const task = await getTask(id);
     const users = await getUsers();
     const session = await getServerSession(authOptions);
@@ -23,7 +25,7 @@ export default async function TaskCardComponent({ id }: { id: string }) {
                             <Heading size="md">{task.title}</Heading>
                             <Spacer />
                             {session?.user.roles.includes('admin') && (
-                                <TaskCardMenu menuTitle="Actions">
+                                <TaskCardMenu menuTitle={t('Actions')}>
                                     <TaskEditComponent
                                         users={users}
                                         assignedUsers={task.assigned}
@@ -36,7 +38,7 @@ export default async function TaskCardComponent({ id }: { id: string }) {
                                 </TaskCardMenu>
                             )}
                             {session?.user.roles.includes('manager') && (
-                                <TaskCardMenu menuTitle="Actions">
+                                <TaskCardMenu menuTitle={t('Actions')}>
                                     <CardManagerAssignComponent
                                         taskId={task.id}
                                         users={users}
@@ -64,11 +66,13 @@ export default async function TaskCardComponent({ id }: { id: string }) {
                         ) : (
                             <Badge className="ml-4" colorScheme={statusColor(task.status)}>
                                 {task.status}
+
+                                {t(task.status)}
                             </Badge>
                         )}
 
                         <Badge className="ml-4" colorScheme={typeColor(task.type)}>
-                            {task.type}
+                            {t(task.type)}
                         </Badge>
                     </Box>
                 </Box>

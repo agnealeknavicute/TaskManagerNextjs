@@ -5,6 +5,7 @@ import { TaskStatuses, TaskTypes } from '@/app/types/client-task-models';
 import TaskFormComponent from './task-form-component';
 import { realTypeToRawType } from '@/app/helpers/types-switch';
 import { IUser } from '@/app/types/client-user-model';
+import { useTranslations } from 'use-intl';
 
 interface TaskEditComponentProps {
     title: string | TaskStatuses;
@@ -16,11 +17,12 @@ interface TaskEditComponentProps {
 }
 
 export default function TaskEditComponent(props: TaskEditComponentProps) {
+    const t = useTranslations('All');
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
         <>
-            <MenuItem onClick={onOpen}>Edit</MenuItem>
+            <MenuItem onClick={onOpen}>{t('Edit')}</MenuItem>
 
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />

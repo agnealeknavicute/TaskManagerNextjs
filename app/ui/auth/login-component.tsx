@@ -3,6 +3,7 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { Button, FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, Spacer } from '@chakra-ui/react';
+import { useTranslations } from 'use-intl';
 
 interface LoginFormValues {
     username: string;
@@ -10,6 +11,8 @@ interface LoginFormValues {
 }
 
 export default function LoginComponent() {
+    const t = useTranslations('All');
+
     const router = useRouter();
     const {
         register,
@@ -31,46 +34,48 @@ export default function LoginComponent() {
     return (
         <div className="flex justify-center">
             <form onSubmit={handleSubmit(onSubmit)}>
-                <h1 className="pb-6 text-lg text-center">Login</h1>
+                <h1 className="pb-6 text-lg text-center">{t('Login')}</h1>
 
                 <FormControl className="mb-4" isInvalid={!!errors.username}>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>{t('Username')}</FormLabel>
                     <Input
                         type="text"
                         focusBorderColor="#9F7AEA"
                         {...register('username', {
-                            required: 'Username is required',
-                            minLength: { value: 5, message: 'Username should be at least 5 characters long' },
+                            required: t('Username is required'),
+                            minLength: { value: 5, message: t('Username should be at least 5 characters long') },
                         })}
                     />
                     <FormErrorMessage>{errors.username && errors.username.message}</FormErrorMessage>
-                    <FormHelperText>Enter username</FormHelperText>
+                    <FormHelperText>{t('Enter username')}</FormHelperText>
                 </FormControl>
+
                 <FormControl className="mb-4" isInvalid={!!errors.password}>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t('Password')}</FormLabel>
                     <Input
                         type="password"
                         focusBorderColor="#9F7AEA"
                         {...register('password', {
-                            required: 'Password is required',
-                            minLength: { value: 7, message: 'Password should be at least 7 characters long' },
+                            required: t('Password is required'),
+                            minLength: { value: 7, message: t('Password should be at least 7 characters long') },
                         })}
                     />
                     <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
-                    <FormHelperText>Enter password</FormHelperText>
+                    <FormHelperText>{t('Enter password')}</FormHelperText>
                 </FormControl>
+
                 <div className="flex">
                     <Button
                         onClick={() => router.push('/auth-management/signup')}
-                        className=" mt-4 "
+                        className="mt-4"
                         variant="outline"
                         colorScheme="purple"
                     >
-                        Signup
+                        {t('Signup')}
                     </Button>
                     <Spacer />
-                    <Button type="submit" className=" mt-4 " colorScheme="purple">
-                        Submit
+                    <Button type="submit" className="mt-4" colorScheme="purple">
+                        {t('Submit')}
                     </Button>
                 </div>
             </form>

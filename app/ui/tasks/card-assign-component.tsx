@@ -3,6 +3,7 @@ import { IUser } from '@/app/types/client-user-model';
 import { Flex, TagLabel, Tag, TagCloseButton, FormControl, FormLabel, Button } from '@chakra-ui/react';
 import { AutoComplete, AutoCompleteInput, AutoCompleteList, AutoCompleteItem } from '@choc-ui/chakra-autocomplete';
 import React, { useState } from 'react';
+import { useTranslations } from 'use-intl';
 
 interface CardAssignComponentProps {
     users: IUser[];
@@ -17,11 +18,13 @@ export default function CardAssignComponent({
     assignHandler,
     newAssignedUsers,
 }: CardAssignComponentProps) {
+    const t = useTranslations('All');
+
     const [assignUser, setAssignUser] = useState<string>('');
 
     return (
         <FormControl>
-            <FormLabel>Assign users</FormLabel>
+            <FormLabel>{t('Assign users')}</FormLabel>
             <AutoComplete
                 onChange={(value: string) => {
                     setAssignUser(value);
@@ -31,7 +34,7 @@ export default function CardAssignComponent({
                 <Flex>
                     <AutoCompleteInput colorScheme="purple" variant="outline" />
                     <Button onClick={() => assignHandler(assignUser)} className="ml-2">
-                        Add
+                        {t('Add')}
                     </Button>
                 </Flex>
 

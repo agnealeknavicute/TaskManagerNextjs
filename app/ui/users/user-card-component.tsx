@@ -1,9 +1,11 @@
 import { getUser } from '@/app/api/route';
 import { Card, Flex, Avatar, Heading, Text, Spacer } from '@chakra-ui/react';
+import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 export default async function UserCardComponent({ id }: { id: string }) {
     const user = await getUser(id);
+    const t = await getTranslations('All');
     return (
         <>
             {user && (
@@ -16,7 +18,9 @@ export default async function UserCardComponent({ id }: { id: string }) {
                         <Spacer />
                         <Text>{user._id}</Text>
                     </Flex>
-                    <Text>Roles: {user.roles}</Text>
+                    <Text>
+                        {t('Roles')}: {user.roles}
+                    </Text>
                 </Card>
             )}
         </>
