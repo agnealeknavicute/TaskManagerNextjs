@@ -6,7 +6,7 @@ import SignoutComponent from './auth/signout-component';
 import { getTranslations } from 'next-intl/server';
 import LanguageSwitcher from './language-switcher-component';
 
-export default async function Navbar({ locale }: { locale: string }) {
+export default async function Navbar() {
     const session = await getServerSession(authOptions);
     const t = await getTranslations('All');
     return (
@@ -36,7 +36,7 @@ export default async function Navbar({ locale }: { locale: string }) {
                     <SignoutComponent />
                 </div>
             )}
-            <LanguageSwitcher locale={locale} />
+            <LanguageSwitcher />
         </header>
     );
 }

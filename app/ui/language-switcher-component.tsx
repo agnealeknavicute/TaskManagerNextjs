@@ -1,25 +1,12 @@
 'use client';
-import { HamburgerIcon } from '@chakra-ui/icons';
+
 import { Link, usePathname } from '../navigations';
-import {
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    MenuItemOption,
-    MenuGroup,
-    MenuOptionGroup,
-    MenuDivider,
-    Button,
-    IconButton,
-} from '@chakra-ui/react';
+import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { useTranslations } from 'next-intl';
-const LanguageSwitcher = ({ locale }: { locale: string }) => {
+
+const LanguageSwitcher = () => {
     const pathname = usePathname();
     const t = useTranslations('All');
-    const handleChange = (locale: string) => {
-        // router.push(router.pathname, router.asPath, { locale });
-    };
 
     return (
         <div>
