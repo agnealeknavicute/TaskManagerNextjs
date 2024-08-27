@@ -1,18 +1,20 @@
 'use client';
-import { updateTaskStatus } from '@/app/seed/route';
+import { updateTaskStatus } from '@/app/api/route';
 import { ITask, TaskStatuses } from '@/app/types/client-task-models';
 import { Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
+import { useTranslations } from 'use-intl';
 
 interface CardStatusComponentProps {
     task: ITask;
 }
 
 export default function CardStatusMenuComponent(props: CardStatusComponentProps) {
+    const t = useTranslations('All');
     const [taskStatus, setTaskStatus] = useState<TaskStatuses>(props.task.status);
 
-    const statusMenuItems = Object.values(TaskStatuses).map((status) => {
+    const statusMenuItems = Object.values(TaskStatuses).map((status, index) => {
         if (status !== taskStatus) {
             return (
                 <MenuItem
@@ -22,9 +24,9 @@ export default function CardStatusMenuComponent(props: CardStatusComponentProps)
                             setTaskStatus(status);
                         }
                     }}
-                    key={status}
+                    key={index}
                 >
-                    {status}
+                    {t(status)}
                 </MenuItem>
             );
         } else {
@@ -35,7 +37,7 @@ export default function CardStatusMenuComponent(props: CardStatusComponentProps)
     return (
         <Menu>
             <MenuButton size="xs" colorScheme="purple" as={Button} rightIcon={<ChevronDownIcon />}>
-                {taskStatus}
+                {t(taskStatus)}
             </MenuButton>
             <MenuList>{statusMenuItems}</MenuList>
         </Menu>

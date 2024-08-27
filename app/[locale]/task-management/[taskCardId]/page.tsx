@@ -1,6 +1,6 @@
 import TaskCardComponent from '@/app/ui/tasks/task-card-component';
 import React, { Suspense } from 'react';
-import Loading from '../loading';
+import Loading from '../../loading';
 
 export default function TaskCardPage({ params }: { params: { taskCardId: string } }) {
     return (

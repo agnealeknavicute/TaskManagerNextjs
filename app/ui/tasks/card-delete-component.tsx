@@ -2,13 +2,15 @@
 import { MenuItem } from '@chakra-ui/react';
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { deleteTask } from '@/app/seed/route';
+import { deleteTask } from '@/app/api/route';
+import { useTranslations } from 'use-intl';
 
 interface CardDeleteComponentProps {
     id: number;
 }
 
 export default function CardDeleteComponent(props: CardDeleteComponentProps) {
+    const t = useTranslations('All');
     const router = useRouter();
 
     return (
@@ -18,7 +20,7 @@ export default function CardDeleteComponent(props: CardDeleteComponentProps) {
                 router.push('/task-management/task-list');
             }}
         >
-            Delete
+            {t('delete')}
         </MenuItem>
     );
 }

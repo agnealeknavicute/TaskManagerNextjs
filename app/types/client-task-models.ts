@@ -5,6 +5,7 @@ export interface ITask {
     type: TaskTypes;
     createdOn: Date;
     status: TaskStatuses;
+    assigned: string[];
 }
 
 export enum TaskTypes {
