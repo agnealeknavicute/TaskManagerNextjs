@@ -22,7 +22,7 @@ export default function TaskEditComponent(props: TaskEditComponentProps) {
 
     return (
         <>
-            <MenuItem onClick={onOpen}>{t('Edit')}</MenuItem>
+            <MenuItem onClick={onOpen}>{t('edit')}</MenuItem>
 
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />

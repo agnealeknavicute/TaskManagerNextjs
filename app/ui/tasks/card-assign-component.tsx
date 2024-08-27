@@ -24,7 +24,7 @@ export default function CardAssignComponent({
 
     return (
         <FormControl>
-            <FormLabel>{t('Assign users')}</FormLabel>
+            <FormLabel>{t('assign_users')}</FormLabel>
             <AutoComplete
                 onChange={(value: string) => {
                     setAssignUser(value);
@@ -34,7 +34,7 @@ export default function CardAssignComponent({
                 <Flex>
                     <AutoCompleteInput colorScheme="purple" variant="outline" />
                     <Button onClick={() => assignHandler(assignUser)} className="ml-2">
-                        {t('Add')}
+                        {t('add')}
                     </Button>
                 </Flex>
 

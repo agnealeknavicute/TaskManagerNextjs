@@ -30,7 +30,7 @@ export default function CardManagerAssignComponent({ users = [], assignedUsers =
 
     return (
         <>
-            <MenuItem onClick={onOpen}>{t('Change assigned users')}</MenuItem>
+            <MenuItem onClick={onOpen}>{t('change_assigned_users')}</MenuItem>
 
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
@@ -43,7 +43,7 @@ export default function CardManagerAssignComponent({ users = [], assignedUsers =
                             assignHandler={assignHandler}
                         />
                         <Button onClick={updateUsersHandler} className=" mt-4 float-end" colorScheme="purple">
-                            {t('Submit')}
+                            {t('submit')}
                         </Button>
                     </ModalBody>
                 </ModalContent>

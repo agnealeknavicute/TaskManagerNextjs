@@ -20,7 +20,7 @@ export default function CardDeleteComponent(props: CardDeleteComponentProps) {
                 router.push('/task-management/task-list');
             }}
         >
-            {t('Delete')}
+            {t('delete')}
         </MenuItem>
     );
 }

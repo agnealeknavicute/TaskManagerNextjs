@@ -11,7 +11,7 @@ const LanguageSwitcher = () => {
     return (
         <div>
             <Menu colorScheme="purple">
-                <MenuButton aria-label="Options">{t('Change language')}</MenuButton>
+                <MenuButton aria-label="Options">{t('change_language')}</MenuButton>
                 <MenuList className="text-black">
                     <MenuItem>
                         <Link href={pathname} className="text-black" locale="en">

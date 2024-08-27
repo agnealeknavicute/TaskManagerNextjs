@@ -12,7 +12,7 @@ export default function SignoutComponent() {
     }
     return (
         <div className="px-4 hover:cursor-pointer" onClick={signOutHandler}>
-            {t('Sign out')}
+            {t('sign_out')}
         </div>
     );
 }

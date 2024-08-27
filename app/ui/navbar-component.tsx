@@ -12,24 +12,24 @@ export default async function Navbar() {
     return (
         <header className="bg-black/90 items-center h-11 text-white flex justify-between px-4">
             {!session ? (
-                <div>{t('Welcome stranger!')}</div>
+                <div>{t('welcome_stranger')}</div>
             ) : (
                 <div>
-                    {t('Welcome')} {session?.user.username}!
+                    {t('welcome')} {session?.user.username}!
                 </div>
             )}
 
             {session && (
                 <div className="flex justify-center">
                     <a href="/users-management/users-list" className="px-4 hover:cursor-pointer">
-                        {t('User List')}
+                        {t('user_list')}
                     </a>
                     <a href="/task-management/task-list" className="px-4 hover:cursor-pointer">
-                        {t('Task List')}
+                        {t('task_list')}
                     </a>
                     {session.user.roles.includes('admin') && (
                         <Link href="/task-management/task-adding" className="px-4 hover:cursor-pointer">
-                            {t('New Task')}
+                            {t('new_task')}
                         </Link>
                     )}
 

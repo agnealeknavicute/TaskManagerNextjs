@@ -88,32 +88,32 @@ export default function TaskFormComponent({
             >
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <FormControl className="mb-4" isInvalid={!!errors.title}>
-                        <FormLabel>{t('Title')}</FormLabel>
+                        <FormLabel>{t('title')}</FormLabel>
                         <Input
                             type="text"
                             focusBorderColor="#9F7AEA"
                             {...register('title', {
-                                required: t('Title is required'),
-                                minLength: { value: 3, message: t('Title should be at least 3 characters long') },
+                                required: t('title_required'),
+                                minLength: { value: 3, message: t('title_min_length') },
                             })}
                         />
                         <FormErrorMessage>{errors.title && errors.title.message}</FormErrorMessage>
-                        <FormHelperText>{t('Enter the short title of the task')}</FormHelperText>
+                        <FormHelperText>{t('enter_title')}</FormHelperText>
                     </FormControl>
                     <FormControl className="mb-4" isInvalid={!!errors.description}>
-                        <FormLabel>{t('Description')}</FormLabel>
+                        <FormLabel>{t('description')}</FormLabel>
                         <Textarea
                             focusBorderColor="#9F7AEA"
                             {...register('description', {
-                                required: t('Description is required'),
-                                minLength: { value: 7, message: t('Description should be at least 7 characters long') },
+                                required: t('description_required'),
+                                minLength: { value: 7, message: t('description_min_length') },
                             })}
                         />
                         <FormErrorMessage>{errors.description && errors.description.message}</FormErrorMessage>
-                        <FormHelperText>{t('Enter the description of the task')}</FormHelperText>
+                        <FormHelperText>{t('enter_description')}</FormHelperText>
                     </FormControl>
                     <FormControl className="mb-4">
-                        <FormLabel>{t('Type')}</FormLabel>
+                        <FormLabel>{t('type')}</FormLabel>
                         <Slider
                             min={0}
                             max={2}
@@ -139,7 +139,7 @@ export default function TaskFormComponent({
                         assignHandler={assignHandler}
                     />
                     <Button type="submit" className=" mt-4 float-end" colorScheme="purple">
-                        {t('Submit')}
+                        {t('submit')}
                     </Button>
                 </form>
             </Box>

@@ -34,34 +34,34 @@ export default function LoginComponent() {
     return (
         <div className="flex justify-center">
             <form onSubmit={handleSubmit(onSubmit)}>
-                <h1 className="pb-6 text-lg text-center">{t('Login')}</h1>
+                <h1 className="pb-6 text-lg text-center">{t('login')}</h1>
 
                 <FormControl className="mb-4" isInvalid={!!errors.username}>
-                    <FormLabel>{t('Username')}</FormLabel>
+                    <FormLabel>{t('username')}</FormLabel>
                     <Input
                         type="text"
                         focusBorderColor="#9F7AEA"
                         {...register('username', {
-                            required: t('Username is required'),
-                            minLength: { value: 5, message: t('Username should be at least 5 characters long') },
+                            required: t('username_required'),
+                            minLength: { value: 5, message: t('username_min_length') },
                         })}
                     />
                     <FormErrorMessage>{errors.username && errors.username.message}</FormErrorMessage>
-                    <FormHelperText>{t('Enter username')}</FormHelperText>
+                    <FormHelperText>{t('enter_username')}</FormHelperText>
                 </FormControl>
 
                 <FormControl className="mb-4" isInvalid={!!errors.password}>
-                    <FormLabel>{t('Password')}</FormLabel>
+                    <FormLabel>{t('password')}</FormLabel>
                     <Input
                         type="password"
                         focusBorderColor="#9F7AEA"
                         {...register('password', {
-                            required: t('Password is required'),
-                            minLength: { value: 7, message: t('Password should be at least 7 characters long') },
+                            required: t('password_required'),
+                            minLength: { value: 7, message: t('password_min_length') },
                         })}
                     />
                     <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
-                    <FormHelperText>{t('Enter password')}</FormHelperText>
+                    <FormHelperText>{t('enter_password')}</FormHelperText>
                 </FormControl>
 
                 <div className="flex">
@@ -71,11 +71,11 @@ export default function LoginComponent() {
                         variant="outline"
                         colorScheme="purple"
                     >
-                        {t('Signup')}
+                        {t('signup')}
                     </Button>
                     <Spacer />
                     <Button type="submit" className="mt-4" colorScheme="purple">
-                        {t('Submit')}
+                        {t('submit')}
                     </Button>
                 </div>
             </form>

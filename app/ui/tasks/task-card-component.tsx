@@ -25,7 +25,7 @@ export default async function TaskCardComponent({ id }: { id: string }) {
                             <Heading size="md">{task.title}</Heading>
                             <Spacer />
                             {session?.user.roles.includes('admin') && (
-                                <TaskCardMenu menuTitle={t('Actions')}>
+                                <TaskCardMenu menuTitle={t('actions')}>
                                     <TaskEditComponent
                                         users={users}
                                         assignedUsers={task.assigned}
@@ -38,7 +38,7 @@ export default async function TaskCardComponent({ id }: { id: string }) {
                                 </TaskCardMenu>
                             )}
                             {session?.user.roles.includes('manager') && (
-                                <TaskCardMenu menuTitle={t('Actions')}>
+                                <TaskCardMenu menuTitle={t('actions')}>
                                     <CardManagerAssignComponent
                                         taskId={task.id}
                                         users={users}
@@ -65,8 +65,6 @@ export default async function TaskCardComponent({ id }: { id: string }) {
                             <CardStatusMenuComponent task={task} />
                         ) : (
                             <Badge className="ml-4" colorScheme={statusColor(task.status)}>
-                                {task.status}
-
                                 {t(task.status)}
                             </Badge>
                         )}
