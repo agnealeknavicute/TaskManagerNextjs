@@ -20,7 +20,7 @@ import { TaskTypes } from '../../types/client-task-models';
 import { postTask, updateTask } from '@/app/api/task/route';
 import { useForm } from 'react-hook-form';
 import { IUser } from '@/app/types/client-user-model';
-import CardAssignComponent from './card-assign-component';
+import CardAssignComponent from '../users/users-assign-component';
 import { useTranslations } from 'use-intl';
 import GroupAssignComponent from '../groups/group-assign-component';
 import { IGroup } from '@/app/types/client-group-model';

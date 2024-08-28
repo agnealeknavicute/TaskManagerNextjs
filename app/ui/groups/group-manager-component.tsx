@@ -3,23 +3,19 @@
 import { IUser } from '@/app/types/client-user-model';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import CardAssignComponent from '../tasks/card-assign-component';
+import CardAssignComponent from '../users/users-assign-component';
 import { Button, Flex, Spacer } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import GroupDeleteComponent from './group-delete-component';
 import { updateGroupAssignedUsers } from '@/app/api/group/route';
 
-interface GroupManAssignCompProps {
+interface GroupManagCompProps {
     users: IUser[];
     assignedUsers: string[] | null;
     groupId: number;
 }
 
-export default function GroupManagerAssignComponent({
-    users = [],
-    assignedUsers = [],
-    groupId,
-}: GroupManAssignCompProps) {
+export default function GroupManagerComponent({ users = [], assignedUsers = [], groupId }: GroupManagCompProps) {
     const freeUsers = users.filter((user) => user.assignedGroup === 0);
     const t = useTranslations('All');
     const router = useRouter();

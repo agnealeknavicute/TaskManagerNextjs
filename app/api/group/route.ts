@@ -1,7 +1,6 @@
 'use server';
 
 import connectDB from '@/lib/connectDB';
-
 import { revalidatePath } from 'next/cache';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';

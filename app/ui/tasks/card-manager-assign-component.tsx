@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { Modal, ModalOverlay, ModalContent, ModalBody, useDisclosure, Button, MenuItem } from '@chakra-ui/react';
-import CardAssignComponent from './card-assign-component';
+import CardAssignComponent from '../users/users-assign-component';
 import { IUser } from '@/app/types/client-user-model';
 import { useTranslations } from 'use-intl';
 import { updateAssignedUsers } from '@/app/api/task/route';

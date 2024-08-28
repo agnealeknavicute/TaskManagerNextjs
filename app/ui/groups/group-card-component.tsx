@@ -1,6 +1,6 @@
 import { Heading, Stack, Box, List, ListItem } from '@chakra-ui/react';
 import React from 'react';
-import GroupManagerAssignComponent from './group-manag-assign-component';
+import GroupManagerComponent from './group-manager-component';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { getAssignedUsernames, getGroup } from '@/app/api/group/route';
@@ -19,7 +19,7 @@ export default async function GroupCardComponent({ id }: { id: number }) {
                         <Box className="">
                             <Heading size="md">{group.title}</Heading>
                             {session?.user.roles.includes('admin') ? (
-                                <GroupManagerAssignComponent
+                                <GroupManagerComponent
                                     groupId={group.id}
                                     assignedUsers={assignedUsernames || []}
                                     users={users}

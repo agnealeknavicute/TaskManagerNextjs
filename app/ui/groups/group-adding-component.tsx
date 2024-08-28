@@ -4,7 +4,7 @@ import { IUser } from '@/app/types/client-user-model';
 import { useForm } from 'react-hook-form';
 import { Button, FormControl, FormErrorMessage, FormLabel, Input, Box } from '@chakra-ui/react';
 import { useTranslations } from 'use-intl';
-import CardAssignComponent from '../tasks/card-assign-component';
+import CardAssignComponent from '../users/users-assign-component';
 import { useState } from 'react';
 import { createGroup } from '@/app/api/group/route';
 
