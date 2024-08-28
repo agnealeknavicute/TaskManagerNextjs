@@ -1,42 +1,42 @@
 'use client';
-import { IUser } from '@/app/types/client-user-model';
+import { IGroup } from '@/app/types/client-group-model';
 import { Flex, TagLabel, Tag, TagCloseButton, FormControl, FormLabel, Button } from '@chakra-ui/react';
 import { AutoComplete, AutoCompleteInput, AutoCompleteList, AutoCompleteItem } from '@choc-ui/chakra-autocomplete';
 import React, { useState } from 'react';
 import { useTranslations } from 'use-intl';
 
-interface CardAssignComponentProps {
-    users: IUser[];
-    assignHandler: (assignUser: string) => void;
-    newAssignedUsers: string[];
-    setNewAssignedUsers: (newAssignedUsers: string[]) => void;
+interface GroupAssignComponentProps {
+    groups: IGroup[];
+    assignGroupHandler: (assignGroup: string) => void;
+    newAssignedGroup: string;
+    setNewAssignedGroup: (newAssignedGroup: string) => void;
 }
 
-export default function CardAssignComponent({
-    setNewAssignedUsers,
-    users,
-    assignHandler,
-    newAssignedUsers,
-}: CardAssignComponentProps) {
+export default function GroupAssignComponent({
+    setNewAssignedGroup,
+    groups,
+    assignGroupHandler,
+    newAssignedGroup,
+}: GroupAssignComponentProps) {
     const t = useTranslations('All');
 
-    const [assignUser, setAssignUser] = useState<string>('');
+    const [assignGroup, setAssignGroup] = useState<string>('');
 
     return (
         <FormControl>
-            <FormLabel>{t('assign_users')}</FormLabel>
+            <FormLabel>{t('assign_group')}</FormLabel>
             <AutoComplete
                 onChange={(value: string) => {
-                    setAssignUser(value);
+                    setAssignGroup(value);
                 }}
                 openOnFocus
             >
                 <Flex>
-                    <AutoCompleteInput value={assignUser} colorScheme="purple" variant="outline" />
+                    <AutoCompleteInput value={assignGroup} colorScheme="purple" variant="outline" />
                     <Button
                         onClick={() => {
-                            assignHandler(assignUser);
-                            setAssignUser('');
+                            assignGroupHandler(assignGroup);
+                            setAssignGroup('');
                         }}
                         className="ml-2"
                     >
@@ -45,31 +45,31 @@ export default function CardAssignComponent({
                 </Flex>
 
                 <AutoCompleteList>
-                    {users.map((user, ind) => (
-                        <AutoCompleteItem value={user.username} key={`option-${ind}`} textTransform="capitalize">
-                            {user.username}
+                    {groups.map((group, ind) => (
+                        <AutoCompleteItem value={group.title} key={`option-${ind}`} textTransform="capitalize">
+                            {group.title}
                         </AutoCompleteItem>
                     ))}
                 </AutoCompleteList>
             </AutoComplete>
             <Flex className="mt-3">
-                {newAssignedUsers.map((user, index) => (
+                {newAssignedGroup && (
                     <Tag
                         className="mr-1"
                         size="md"
-                        key={index}
+                        key={assignGroup}
                         borderRadius="full"
                         variant="solid"
                         colorScheme="purple"
                     >
-                        <TagLabel>{user}</TagLabel>
+                        <TagLabel>{newAssignedGroup}</TagLabel>
                         <TagCloseButton
                             onClick={() => {
-                                setNewAssignedUsers(newAssignedUsers.filter((assignedUser) => assignedUser !== user));
+                                setNewAssignedGroup('');
                             }}
                         />
                     </Tag>
-                ))}
+                )}
             </Flex>
         </FormControl>
     );

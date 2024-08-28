@@ -1,10 +1,16 @@
-import { getUser } from '@/app/api/route';
+import { getGroupName } from '@/app/api/group/route';
+import { getUser } from '@/app/api/user/route';
 import { Card, Flex, Avatar, Heading, Text, Spacer } from '@chakra-ui/react';
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 export default async function UserCardComponent({ id }: { id: string }) {
     const user = await getUser(id);
+    let groupName: null | string = null;
+
+    if (user) {
+        groupName = await getGroupName(user?.assignedGroup);
+    }
     const t = await getTranslations('All');
     return (
         <>
@@ -18,9 +24,13 @@ export default async function UserCardComponent({ id }: { id: string }) {
                         <Spacer />
                         <Text>{user._id}</Text>
                     </Flex>
-                    <Text>
-                        {t('Roles')}: {user.roles}
-                    </Text>
+                    <Flex>
+                        <Text>
+                            {t('Roles')}: {user.roles}
+                        </Text>
+                        <Spacer />
+                        <Text>{groupName && groupName}</Text>
+                    </Flex>
                 </Card>
             )}
         </>

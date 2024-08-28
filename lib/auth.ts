@@ -36,6 +36,7 @@ export const authOptions: NextAuthOptions = {
                 session.user.id = token.id as string;
                 session.user.username = token.username as string;
                 session.user.roles = token.roles as string[];
+                session.user.assignedGroup = token.assignedGroup as number;
                 delete session.user?.name;
                 delete session.user?.email;
                 delete session.user?.image;
@@ -48,6 +49,7 @@ export const authOptions: NextAuthOptions = {
                 token.id = user.id;
                 token.username = user.username;
                 token.roles = user.roles;
+                token.assignedGroup = user.assignedGroup;
             }
 
             return token;

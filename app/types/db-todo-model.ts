@@ -29,9 +29,13 @@ const todoSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    assigned: {
+    assignedUsers: {
         type: Array,
         require: true,
+    },
+    assignedGroup: {
+        type: Number,
+        required: true,
     },
 });
 

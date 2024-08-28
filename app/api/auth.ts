@@ -19,6 +19,7 @@ export const signup = async (values: { username: string; password: string }) => 
             username,
             roles,
             password: hashedPassword,
+            assignedGroup: 0,
         });
         const savedUser = await user.save();
     } catch (e) {

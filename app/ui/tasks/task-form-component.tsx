@@ -17,11 +17,13 @@ import {
     Textarea,
 } from '@chakra-ui/react';
 import { TaskTypes } from '../../types/client-task-models';
-import { postTask, updateTask } from '@/app/api/route';
+import { postTask, updateTask } from '@/app/api/task/route';
 import { useForm } from 'react-hook-form';
 import { IUser } from '@/app/types/client-user-model';
 import CardAssignComponent from './card-assign-component';
 import { useTranslations } from 'use-intl';
+import GroupAssignComponent from '../groups/group-assign-component';
+import { IGroup } from '@/app/types/client-group-model';
 
 interface TaskFormProps {
     title?: string;
@@ -30,8 +32,10 @@ interface TaskFormProps {
     type?: 0 | 1 | 2;
     modal: boolean;
     users: IUser[];
+    groups: IGroup[];
     assignedUsers?: string[];
     onClose?: () => void;
+    assignedGroup?: string;
 }
 interface TaskFormValues {
     title: string;
@@ -48,11 +52,15 @@ export default function TaskFormComponent({
     modal,
     assignedUsers = [],
     users = [],
+    assignedGroup = '',
+    groups,
     onClose,
 }: TaskFormProps) {
     const t = useTranslations('All');
 
     const [newAssignedUsers, setNewAssignedUsers] = useState<string[]>(assignedUsers);
+    const [newAssignedGroup, setNewAssignedGroup] = useState<string>(assignedGroup);
+
     const router = useRouter();
     const {
         register,
@@ -67,13 +75,16 @@ export default function TaskFormComponent({
             setNewAssignedUsers([...newAssignedUsers, assignUser]);
         }
     };
+    const assignGroupHandler = (assignGroup: string) => {
+        setNewAssignedGroup(assignGroup);
+    };
     const onSubmit = async (data: TaskFormValues) => {
         const taskId = id || Date.now();
         if (id && onClose) {
-            await updateTask(taskId, data.title, data.description, data.type, newAssignedUsers);
+            await updateTask(taskId, data.title, data.description, data.type, newAssignedUsers, newAssignedGroup);
             onClose();
         } else {
-            await postTask(data.title, data.description, data.type, newAssignedUsers);
+            await postTask(data.title, newAssignedGroup, data.description, data.type, newAssignedUsers);
             router.push('/task-management/task-list');
         }
     };
@@ -138,6 +149,15 @@ export default function TaskFormComponent({
                         setNewAssignedUsers={setNewAssignedUsers}
                         assignHandler={assignHandler}
                     />
+                    {groups && (
+                        <GroupAssignComponent
+                            assignGroupHandler={assignGroupHandler}
+                            setNewAssignedGroup={setNewAssignedGroup}
+                            newAssignedGroup={newAssignedGroup}
+                            groups={groups}
+                        />
+                    )}
+
                     <Button type="submit" className=" mt-4 float-end" colorScheme="purple">
                         {t('submit')}
                     </Button>

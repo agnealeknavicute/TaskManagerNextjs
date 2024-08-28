@@ -1,7 +1,7 @@
-import { getUsers } from '@/app/api/route';
 import React from 'react';
 import { CardBody, Card, Heading, Avatar, Flex } from '@chakra-ui/react';
 import Link from 'next/link';
+import { getUsers } from '@/app/api/user/route';
 
 export default async function UserListComponent() {
     const users = await getUsers();
