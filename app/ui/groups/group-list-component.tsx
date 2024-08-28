@@ -6,8 +6,10 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { getGroups } from '@/app/api/group/route';
 import { getUsers } from '@/app/api/user/route';
+import { getTranslations } from 'next-intl/server';
 
 export default async function groupListComponent() {
+    const t = await getTranslations('All');
     const groups = await getGroups();
     const users = await getUsers();
     const freeUsers = users.filter((user) => user.assignedGroup === 0);
@@ -16,7 +18,7 @@ export default async function groupListComponent() {
         <>
             {session?.user.roles.includes('admin') && (
                 <Card maxW="sm" className=" my-4 mx-auto px-2 py-2">
-                    <Text className="mb-4 text-xl">New Group</Text>
+                    <Text className="mb-4 text-xl">{t('new_group')}</Text>
                     <GroupAddingComponent users={freeUsers} />
                 </Card>
             )}

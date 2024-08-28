@@ -18,9 +18,9 @@ export default async function TaskListComponent() {
     return (
         <>
             {session?.user.roles.includes('user') ? (
-                <Text className="text-center">Tasks assigned to your group</Text>
+                <Text className="text-center">{t('tasks_assigned_to_your_group')}</Text>
             ) : (
-                <Text className="text-center">All tasks</Text>
+                <Text className="text-center">{t('all_tasks')}</Text>
             )}
             {tasks.map((task: ITask) => (
                 <>

@@ -5,6 +5,7 @@ import { getTranslations } from 'next-intl/server';
 import LanguageSwitcher from './language-switcher-component';
 import DrawerComponent from './drawer-component';
 import { getGroupName } from '../api/group/route';
+import { Box } from '@chakra-ui/react';
 
 export default async function Navbar() {
     const session = await getServerSession(authOptions);
@@ -19,10 +20,14 @@ export default async function Navbar() {
                     {t('welcome')} {session?.user.username}!
                 </div>
             )}
-
-            <DrawerComponent assignedGroup={groupName || ''} roles={session?.user.roles} />
-
-            <LanguageSwitcher />
+            <Box className="flex items-center">
+                <div className="mx-2">
+                    <DrawerComponent assignedGroup={groupName || ''} roles={session?.user.roles} />
+                </div>
+                <div className="mx-2">
+                    <LanguageSwitcher />
+                </div>
+            </Box>
         </header>
     );
 }

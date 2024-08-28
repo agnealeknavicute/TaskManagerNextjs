@@ -1,5 +1,19 @@
 import { statusColor, typeColor } from '@/app/helpers/badge-colors';
-import { Text, Heading, Stack, Box, Divider, Spacer, Badge, Flex } from '@chakra-ui/react';
+import {
+    Text,
+    Heading,
+    Stack,
+    Box,
+    Divider,
+    Spacer,
+    Badge,
+    Flex,
+    ListItem,
+    List,
+    Card,
+    Code,
+    Tag,
+} from '@chakra-ui/react';
 import React from 'react';
 import { TaskCardMenu } from './card-menu-component';
 import TaskEditComponent from './task-edit-component';
@@ -35,63 +49,84 @@ export default async function TaskCardComponent({ id }: { id: string }) {
         <>
             {task ? (
                 <Box className="w-2/3  mx-auto">
-                    <Stack spacing="5">
-                        <Box className="flex items-center">
-                            <Heading size="md">{task.title}</Heading>
-                            <Spacer />
-                            {session?.user.roles.includes('admin') && (
-                                <TaskCardMenu menuTitle={t('actions')}>
-                                    <TaskEditComponent
-                                        groups={groups}
-                                        assignedGroup={groupName || ''}
-                                        users={users}
-                                        assignedUsers={assignedUsernames || []}
-                                        id={task.id}
-                                        type={task.type}
-                                        title={task.title}
-                                        description={task.description}
-                                    />
-                                    <CardDeleteComponent id={task.id} />
-                                </TaskCardMenu>
-                            )}
-                            {session?.user.roles.includes('manager') && (
-                                <TaskCardMenu menuTitle={t('actions')}>
-                                    <CardManagerAssignComponent
-                                        taskId={task.id}
-                                        users={users}
-                                        assignedUsers={assignedUsernames || []}
-                                    />
-                                    <GroupAssignWrapComponent
-                                        assignedGroup={groupName || ''}
-                                        taskId={task?.id}
-                                        groups={groups}
-                                    />
-                                </TaskCardMenu>
-                            )}
-                        </Box>
-                        <Flex>
+                    <Card shadow="md" className="px-5 py-5">
+                        <Stack spacing="5">
+                            <Box className="flex items-center">
+                                <Heading size="md">{task.title}</Heading>
+                                <Spacer />
+                                {session?.user.roles.includes('admin') && (
+                                    <TaskCardMenu menuTitle={t('actions')}>
+                                        <TaskEditComponent
+                                            groups={groups}
+                                            assignedGroup={groupName || ''}
+                                            users={users}
+                                            assignedUsers={assignedUsernames || []}
+                                            id={task.id}
+                                            type={task.type}
+                                            title={task.title}
+                                            description={task.description}
+                                        />
+                                        <CardDeleteComponent id={task.id} />
+                                    </TaskCardMenu>
+                                )}
+                                {session?.user.roles.includes('manager') && (
+                                    <TaskCardMenu menuTitle={t('actions')}>
+                                        <CardManagerAssignComponent
+                                            taskId={task.id}
+                                            users={users}
+                                            assignedUsers={assignedUsernames || []}
+                                        />
+                                        <GroupAssignWrapComponent
+                                            assignedGroup={groupName || ''}
+                                            taskId={task?.id}
+                                            groups={groups}
+                                        />
+                                    </TaskCardMenu>
+                                )}
+                                {session?.user.roles.includes('user') && (
+                                    <Badge className="h-4" size="md" variant="solid" colorScheme="red">
+                                        Task for you
+                                    </Badge>
+                                )}
+                            </Box>
                             <Text>{task.description}</Text>
+                        </Stack>
+                        <Divider className="mt-4 mb-1" />
+                        <Box className="flex items-center">
+                            <Text className="text-xs text-slate-700">
+                                {new Date(task.createdOn).toLocaleDateString()}
+                            </Text>
+
                             <Spacer />
-                            {groupName && <Text className="text-md  text-slate-700">Group name: {groupName}</Text>}
-                        </Flex>
-                    </Stack>
-                    <Divider className="mt-4 mb-1" />
-                    <Box className="flex items-center">
-                        <Text className="text-xs text-slate-700">{new Date(task.createdOn).toLocaleDateString()}</Text>
+                            {session?.user.roles.includes('admin') ? (
+                                <CardStatusMenuComponent task={task} />
+                            ) : (
+                                <Badge className="ml-4" colorScheme={statusColor(task.status)}>
+                                    {t(task.status)}
+                                </Badge>
+                            )}
 
-                        <Spacer />
-                        {session?.user.roles.includes('admin') ? (
-                            <CardStatusMenuComponent task={task} />
-                        ) : (
-                            <Badge className="ml-4" colorScheme={statusColor(task.status)}>
-                                {t(task.status)}
+                            <Badge className="ml-4" colorScheme={typeColor(task.type)}>
+                                {t(task.type)}
                             </Badge>
-                        )}
-
-                        <Badge className="ml-4" colorScheme={typeColor(task.type)}>
-                            {t(task.type)}
-                        </Badge>
-                    </Box>
+                        </Box>
+                    </Card>
+                    <Card maxW={220} shadow="md" className="px-5 py-4 my-6  shadow-purple-700">
+                        <Stack spacing="10px">
+                            <Box>
+                                <Text className="font-light">{t('group_name')}</Text>
+                                <Text>{groupName}</Text>
+                            </Box>
+                            <Box>
+                                <Text className="mr-2  font-light py-[1px]">{t('group_users')}</Text>
+                                <List>
+                                    {assignedGroupUsernames?.map((username) => (
+                                        <ListItem className="mr-2 text-base">{username}</ListItem>
+                                    ))}
+                                </List>
+                            </Box>
+                        </Stack>
+                    </Card>
                 </Box>
             ) : (
                 ''

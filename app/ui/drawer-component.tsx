@@ -27,20 +27,20 @@ export default function DrawerComponent({ roles, assignedGroup }: DrawerComponen
     const t = useTranslations('All');
     return (
         <>
-            <Text colorScheme="purple" onClick={onOpen}>
-                Open menu
+            <Text className="hover:cursor-pointer" onClick={onOpen}>
+                {t('open_menu')}
             </Text>
             <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
                 <DrawerOverlay />
                 <DrawerContent>
                     <DrawerCloseButton />
-                    <DrawerHeader>More actions</DrawerHeader>
+                    <DrawerHeader>{t('more_actions')}</DrawerHeader>
                     <DrawerBody>
                         {roles && (
                             <List>
                                 {roles.includes('admin') && (
-                                    <ListItem className="my-4">
-                                        <a href="/users-management/users-list" className="px-4 hover:cursor-pointer">
+                                    <ListItem className="my-4 cursor-pointer">
+                                        <a href="/users-management/users-list" className="px-4 ">
                                             {t('user_list')}
                                         </a>
                                     </ListItem>
@@ -53,7 +53,7 @@ export default function DrawerComponent({ roles, assignedGroup }: DrawerComponen
                                 {roles.includes('admin') || roles.includes('manager') ? (
                                     <ListItem className="my-4">
                                         <a href="/group-management/group-list" className="px-4 hover:cursor-pointer">
-                                            Group list
+                                            {t('group_list')}
                                         </a>
                                     </ListItem>
                                 ) : (
@@ -70,8 +70,12 @@ export default function DrawerComponent({ roles, assignedGroup }: DrawerComponen
                             </List>
                         )}
                         <SignoutComponent />
-                        <Text className="mt-6 font-semibold">Current role: {roles}</Text>
-                        <Text className=" font-semibold">Assigned group: {assignedGroup}</Text>
+                        <Text className="mt-6 font-semibold">
+                            {t('current_role')}: {roles}
+                        </Text>
+                        <Text className=" font-semibold">
+                            {t('assigned_group')}: {assignedGroup}
+                        </Text>
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>
