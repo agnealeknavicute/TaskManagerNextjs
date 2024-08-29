@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema(
             type: Array,
             required: true,
         },
+        assignedGroup: {
+            type: Number,
+            required: true,
+        },
     },
     { timestamps: true },
 );

@@ -1,11 +1,12 @@
 'use client';
 import React from 'react';
-import { Modal, ModalOverlay, ModalContent, useDisclosure, MenuItem } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, useDisclosure, MenuItem, grid } from '@chakra-ui/react';
 import { TaskStatuses, TaskTypes } from '@/app/types/client-task-models';
 import TaskFormComponent from './task-form-component';
 import { realTypeToRawType } from '@/app/helpers/types-switch';
 import { IUser } from '@/app/types/client-user-model';
 import { useTranslations } from 'use-intl';
+import { IGroup } from '@/app/types/client-group-model';
 
 interface TaskEditComponentProps {
     title: string | TaskStatuses;
@@ -14,6 +15,8 @@ interface TaskEditComponentProps {
     id: number;
     users: IUser[];
     assignedUsers: string[];
+    assignedGroup: string;
+    groups: IGroup[];
 }
 
 export default function TaskEditComponent(props: TaskEditComponentProps) {
@@ -28,6 +31,8 @@ export default function TaskEditComponent(props: TaskEditComponentProps) {
                 <ModalOverlay />
                 <ModalContent>
                     <TaskFormComponent
+                        groups={props.groups}
+                        assignedGroup={props.assignedGroup}
                         modal={true}
                         id={props.id}
                         type={realTypeToRawType(props.type)}

@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getRequestConfig } from 'next-intl/server';
-import { getTranslation } from './app/api/route';
+import { getTranslation } from './app/api/task/route';
 
 export const locales = ['en', 'ru', 'lv'];
 

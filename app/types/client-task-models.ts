@@ -1,11 +1,13 @@
-export interface ITask {
+import { IAssignedUsers } from './client-group-model';
+
+export interface ITask extends IAssignedUsers {
     id: number;
     title: string;
     description: string;
     type: TaskTypes;
     createdOn: Date;
     status: TaskStatuses;
-    assigned: string[];
+    assignedGroup: number;
 }
 
 export enum TaskTypes {

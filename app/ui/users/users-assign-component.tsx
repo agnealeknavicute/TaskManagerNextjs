@@ -5,19 +5,19 @@ import { AutoComplete, AutoCompleteInput, AutoCompleteList, AutoCompleteItem } f
 import React, { useState } from 'react';
 import { useTranslations } from 'use-intl';
 
-interface CardAssignComponentProps {
+interface UsersAssignComponentProps {
     users: IUser[];
     assignHandler: (assignUser: string) => void;
     newAssignedUsers: string[];
     setNewAssignedUsers: (newAssignedUsers: string[]) => void;
 }
 
-export default function CardAssignComponent({
+export default function UsersAssignComponent({
     setNewAssignedUsers,
     users,
     assignHandler,
     newAssignedUsers,
-}: CardAssignComponentProps) {
+}: UsersAssignComponentProps) {
     const t = useTranslations('All');
 
     const [assignUser, setAssignUser] = useState<string>('');
@@ -32,8 +32,14 @@ export default function CardAssignComponent({
                 openOnFocus
             >
                 <Flex>
-                    <AutoCompleteInput colorScheme="purple" variant="outline" />
-                    <Button onClick={() => assignHandler(assignUser)} className="ml-2">
+                    <AutoCompleteInput value={assignUser} colorScheme="purple" variant="outline" />
+                    <Button
+                        onClick={() => {
+                            assignHandler(assignUser);
+                            setAssignUser('');
+                        }}
+                        className="ml-2"
+                    >
                         {t('add')}
                     </Button>
                 </Flex>
