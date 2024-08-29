@@ -8,11 +8,10 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
 export default async function TaskListComponent() {
-    let tasks = await getTasks();
-    const t = await getTranslations('All');
-    const session = await getServerSession(authOptions);
+    const [tasks, t, session] = await Promise.all([getTasks(), getTranslations('All'), getServerSession(authOptions)]);
+    let filteredTasks: ITask[] = [];
     if (session?.user.roles.includes('user')) {
-        tasks = tasks.filter((task) => task.assignedGroup === session?.user.assignedGroup);
+        filteredTasks = tasks.filter((task) => task.assignedGroup === session?.user.assignedGroup);
     }
 
     return (
@@ -22,7 +21,7 @@ export default async function TaskListComponent() {
             ) : (
                 <Text className="text-center">{t('all_tasks')}</Text>
             )}
-            {tasks.map((task: ITask) => (
+            {filteredTasks.map((task: ITask) => (
                 <>
                     <Card maxW="sm" className="my-4 mx-auto cursor-pointer" key={task.id}>
                         <Link href={`/task-management/${task.id}`}>

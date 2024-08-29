@@ -9,11 +9,13 @@ import { getUsers } from '@/app/api/user/route';
 import { getTranslations } from 'next-intl/server';
 
 export default async function groupListComponent() {
-    const t = await getTranslations('All');
-    const groups = await getGroups();
-    const users = await getUsers();
+    const [t , groups, users, session] = await Promise.all([
+        getTranslations("All"),
+        getGroups(),
+        getUsers(),
+        getServerSession(authOptions)
+    ])
     const freeUsers = users.filter((user) => user.assignedGroup === 0);
-    const session = await getServerSession(authOptions);
     return (
         <>
             {session?.user.roles.includes('admin') && (

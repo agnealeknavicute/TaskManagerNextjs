@@ -7,7 +7,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { ITask, TaskStatuses } from '@/app/types/client-task-models';
 import { Todo } from '@/app/types/db-todo-model';
-import { HasAssignedUsers } from '@/app/types/client-group-model';
+import { IAssignedUsers } from '@/app/types/client-group-model';
 import { User } from '@/app/types/db-user-model';
 import { Group } from '@/app/types/db-group-model';
 import { Lang } from '@/app/types/db-lang-model';
@@ -50,7 +50,7 @@ async function getGroupId(groupTitle: string): Promise<string | undefined> {
     return group?.id;
 }
 
-export async function getAssignedUsernames(taskOrGroup: HasAssignedUsers | null) {
+export async function getAssignedUsernames(taskOrGroup: IAssignedUsers | null) {
     if (!taskOrGroup || !hasAssignedUsers(taskOrGroup)) {
         return null;
     }

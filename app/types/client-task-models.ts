@@ -1,6 +1,6 @@
-import { HasAssignedUsers } from './client-group-model';
+import { IAssignedUsers } from './client-group-model';
 
-export interface ITask extends HasAssignedUsers {
+export interface ITask extends IAssignedUsers {
     id: number;
     title: string;
     description: string;

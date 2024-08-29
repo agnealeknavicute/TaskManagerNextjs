@@ -29,14 +29,18 @@ import { getGroup, getGroupName, getGroups } from '@/app/api/group/route';
 import { getUsers } from '@/app/api/user/route';
 
 export default async function TaskCardComponent({ id }: { id: string }) {
-    const t = await getTranslations('All');
-    const task = await getTask(id);
+    const [t, task, groups, users, session] = await Promise.all([
+        getTranslations('All'),
+        getTask(id),
+        getGroups(),
+        getUsers(),
+        getServerSession(authOptions),
+    ]);
+
     let groupName: null | string = null;
     if (task) {
         groupName = await getGroupName(task?.assignedGroup);
     }
-    const groups = await getGroups();
-    const users = await getUsers();
     const assignedUsernames: string[] | null = await getAssignedUsernames(task);
     let assignedGroupUsernames: string[] | null = null;
     if (task?.assignedGroup) {
@@ -44,7 +48,6 @@ export default async function TaskCardComponent({ id }: { id: string }) {
         assignedGroupUsernames = await getAssignedUsernames(taskGroup);
     }
 
-    const session = await getServerSession(authOptions);
     return (
         <>
             {task ? (

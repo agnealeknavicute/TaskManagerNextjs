@@ -5,13 +5,13 @@ import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 export default async function UserCardComponent({ id }: { id: string }) {
-    const user = await getUser(id);
+    const [user, t] = await Promise.all([getUser(id), getTranslations('All')]);
+
     let groupName: null | string = null;
 
     if (user) {
         groupName = await getGroupName(user?.assignedGroup);
     }
-    const t = await getTranslations('All');
     return (
         <>
             {user && (

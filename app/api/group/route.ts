@@ -4,7 +4,7 @@ import connectDB from '@/lib/connectDB';
 import { revalidatePath } from 'next/cache';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import { HasAssignedUsers, IGroup } from '@/app/types/client-group-model';
+import { IAssignedUsers, IGroup } from '@/app/types/client-group-model';
 import { User } from '@/app/types/db-user-model';
 import { Group } from '@/app/types/db-group-model';
 import { getUserIds } from '../task/route';
@@ -34,7 +34,7 @@ export async function getGroup(id: number): Promise<IGroup | null> {
 function hasAssignedUsers(obj: any): obj is { assignedUsers: string[] } {
     return obj && Array.isArray(obj.assignedUsers);
 }
-export async function getAssignedUsernames(taskOrGroup: HasAssignedUsers | null) {
+export async function getAssignedUsernames(taskOrGroup: IAssignedUsers | null) {
     if (!taskOrGroup || !hasAssignedUsers(taskOrGroup)) {
         return null;
     }

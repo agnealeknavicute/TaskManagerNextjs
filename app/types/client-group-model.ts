@@ -1,8 +1,8 @@
-export interface HasAssignedUsers {
+export interface IAssignedUsers {
     assignedUsers: string[];
 }
 
-export interface IGroup extends HasAssignedUsers {
+export interface IGroup extends IAssignedUsers {
     _id: string;
     id: number;
     title: string;

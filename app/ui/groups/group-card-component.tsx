@@ -7,9 +7,7 @@ import { getAssignedUsernames, getGroup } from '@/app/api/group/route';
 import { getUsers } from '@/app/api/user/route';
 
 export default async function GroupCardComponent({ id }: { id: number }) {
-    const group = await getGroup(id);
-    const users = await getUsers();
-    const session = await getServerSession(authOptions);
+    const [group, users, session] = await Promise.all([getGroup(id), getUsers(), getServerSession(authOptions)]);
     const assignedUsernames: string[] | null = await getAssignedUsernames(group);
     return (
         <>

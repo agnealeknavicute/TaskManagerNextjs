@@ -8,9 +8,8 @@ import { getGroupName } from '../api/group/route';
 import { Box } from '@chakra-ui/react';
 
 export default async function Navbar() {
-    const session = await getServerSession(authOptions);
+    const [session, t] = await Promise.all([getServerSession(authOptions), getTranslations('All')]);
     const groupName = await getGroupName(session?.user.assignedGroup);
-    const t = await getTranslations('All');
     return (
         <header className="bg-black/90 items-center h-11 text-white flex justify-between px-4">
             {!session ? (
